@@ -2,6 +2,8 @@ import React from "react";
 import ShoppingList from "./components/ShoppingList";
 import Header from './components/layout/Header';
 import AddItem from './components/AddItem';
+import uuid from 'uuid';
+
 class App extends React.Component {
     state = {
 			items: [
@@ -33,16 +35,27 @@ class App extends React.Component {
 			})
     }
 
+		// delete item
     delItem = (id) => {
 			this.setState({ items: [...this.state.items.filter(item => item.id !== id)] })
-    }
+		}
+		
+		// add new item
+		addItem = (title) => {
+			const item = {
+				id: uuid.v4(),
+				food: title,
+				purchased: false
+			}
+			this.setState({ items: [...this.state.items,  item ]})
+		}
 
     render() {
         return (
             <div className="shopping-container" style={shoppingContainer}>
 							<div className="container">
                 <Header />
-								<AddItem />
+								<AddItem addItem={this.addItem} />
                 <ShoppingList 
 									items={this.state.items} 
 									markComplete={this.markComplete} 

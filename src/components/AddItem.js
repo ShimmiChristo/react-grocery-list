@@ -11,11 +11,12 @@ export class AddItem extends Component {
 
 		onSubmit = (e) => {
 			e.preventDefault();
+			this.props.addItem(this.state.title);
 		}
 
     render() {
         return (
-            <form>
+            <form onSubmit={this.onSubmit}>
             	<input 
 								type="text" 
 								name="title" 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { NONAME } from 'dns';
+// import { NONAME } from 'dns';
 
 export class ShoppingListItem extends Component {
     getStyle = () => {
@@ -13,7 +13,7 @@ export class ShoppingListItem extends Component {
     }
 
     render() {
-        const { id, purchased, food } = this.props.item;
+        const { id, food } = this.props.item;
         return (
             <div style={this.getStyle()}>
                 <div>
