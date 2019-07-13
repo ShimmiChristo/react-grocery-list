@@ -13,12 +13,12 @@ export class ShoppingListItem extends Component {
     }
 
     render() {
-        const { id, food } = this.props.item;
+        const { id, title } = this.props.item;
         return (
             <div style={this.getStyle()}>
                 <div>
                     <input type="checkbox" onChange={this.props.markComplete.bind(this, id)} />
-                     {food} 
+                     {title} 
                      <button onClick={this.props.delItem.bind(this, id) } style={btnStyle}>x</button>
                 </div>
             </div>

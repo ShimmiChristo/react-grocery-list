@@ -1,29 +1,21 @@
 import React from "react";
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+// import uuid from 'uuid';
 import ShoppingList from "./components/ShoppingList";
 import Header from './components/layout/Header';
 import AddItem from './components/AddItem';
-import uuid from 'uuid';
+import About from './components/pages/About';
 
 class App extends React.Component {
     state = {
-			items: [
-				{
-						id: 1,
-						food: 'apple',
-						purchased: false,
-				}, 
-				{
-						id: 2,
-						food: 'pears',
-						purchased: false,
-				}, 
-				{
-						id: 3,
-						food: 'cherries',
-						purchased: true,
-				}
-			]
-    }
+			items: []
+		}
+		
+		componentDidMount() {
+			fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+				.then(response => response.json())
+				.then(json => this.setState({items: json}))
+		}
 
     markComplete = (id) => {
 			this.setState({ items: this.state.items.map(item => {
@@ -42,27 +34,44 @@ class App extends React.Component {
 		
 		// add new item
 		addItem = (title) => {
-			const item = {
-				id: uuid.v4(),
-				food: title,
-				purchased: false
-			}
-			this.setState({ items: [...this.state.items,  item ]})
+			// const item = {
+			// 	id: uuid.v4(),
+			// 	food: title,
+			// 	purchased: false
+			// }
+			fetch('https://jsonplaceholder.typicode.com/posts', {
+				method: 'POST', 
+				body: JSON.stringify({
+					title: title,
+					purchased: false
+				})
+			})
+				.then(response => response.json())
+				.then(json => this.setState({ items: [...this.state.items,  json ]}))
+
+			
 		}
 
     render() {
         return (
+					<Router>
             <div className="shopping-container" style={shoppingContainer}>
 							<div className="container">
                 <Header />
-								<AddItem addItem={this.addItem} />
-                <ShoppingList 
-									items={this.state.items} 
-									markComplete={this.markComplete} 
-									delItem={this.delItem}
-									/>
+								<Route exact path="/" render={props => (
+									<React.Fragment>
+										<AddItem addItem={this.addItem} />
+										<ShoppingList 
+											items={this.state.items} 
+											markComplete={this.markComplete} 
+											delItem={this.delItem}
+											/>
+									</React.Fragment>
+								)} />
+								<Route path="/about" component={About} />
 							</div>
 						</div>
+					</Router>
         )
 		}
 		
