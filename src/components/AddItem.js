@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types';
 
 export class AddItem extends Component {
 		state = {
@@ -12,6 +13,7 @@ export class AddItem extends Component {
 		onSubmit = (e) => {
 			e.preventDefault();
 			this.props.addItem(this.state.title);
+			this.setState({ title: '' });
 		}
 
     render() {
@@ -33,5 +35,10 @@ export class AddItem extends Component {
         )
     }
 }
+
+AddItem.propTypes = {
+	addItem: PropTypes.func.isRequired
+}
+
 
 export default AddItem

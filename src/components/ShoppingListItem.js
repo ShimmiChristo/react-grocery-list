@@ -28,7 +28,9 @@ export class ShoppingListItem extends Component {
 
 // PropTypes
 ShoppingListItem.propTypes = { 
-    item: PropTypes.object
+    item: PropTypes.object.isRequired,
+    markComplete: PropTypes.func.isRequired,
+    delItem: PropTypes.func.isRequired
 }
 
 const btnStyle = {

@@ -29,27 +29,28 @@ class App extends React.Component {
 
 		// delete item
     delItem = (id) => {
-			this.setState({ items: [...this.state.items.filter(item => item.id !== id)] })
+			fetch('https://jsonplaceholder.typicode.com/todos/{$id}', {
+				method: 'DELETE'
+			})
+			.then (response => response.json())
+			.then(json => this.setState({ items: [...this.state.items.filter(item => item.id !== id)] }))
+
 		}
-		
+			
 		// add new item
 		addItem = (title) => {
-			// const item = {
-			// 	id: uuid.v4(),
-			// 	food: title,
-			// 	purchased: false
-			// }
-			fetch('https://jsonplaceholder.typicode.com/posts', {
+			fetch('https://jsonplaceholder.typicode.com/todos', {
 				method: 'POST', 
 				body: JSON.stringify({
-					title: title,
-					purchased: false
-				})
+					title: title
+				}),
+				headers: {
+					"Content-type": "application/json; charset=UTF-8"
+				}
 			})
 				.then(response => response.json())
 				.then(json => this.setState({ items: [...this.state.items,  json ]}))
 
-			
 		}
 
     render() {
